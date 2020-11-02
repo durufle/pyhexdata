@@ -24,4 +24,4 @@ setup(name='pyhexdata',
       license='MIT',
       packages=find_packages(),
       install_requires=['numpy'],
-      zip_safe=True)
+      zip_safe=False)
