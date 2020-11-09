@@ -33,6 +33,6 @@ production:
     script:
     - echo "publish phase"
     - python setup.py sdist bdist_wheel
-    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url https://git.ul-ts.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+    - TWINE_PASSWORD=32GwCg7Y_NciQ1BY5Z1k TWINE_USERNAME=pybench-deploy-token python -m twine upload --repository-url https://git.ul-ts.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
     only:
         - tags
