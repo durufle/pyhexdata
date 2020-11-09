@@ -2,7 +2,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(name='pyhexdata',
-      version='0.0.0',
+      version='0.1.0',
       
       description='Hex data conversion',
       long_description=open('README.md').read(),
@@ -24,4 +24,4 @@ setup(name='pyhexdata',
       license='MIT',
       packages=find_packages(),
       install_requires=['numpy'],
-      zip_safe=True)
+      zip_safe=False)

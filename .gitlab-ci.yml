@@ -1,0 +1,39 @@
+default:
+    image: python:3.6
+
+    before_script:
+        - echo "Initialize environment"
+        - apt-get update -qy
+        - apt-get install -y python3-sphinx
+        - pip install -r requirements.txt
+stages:
+    - build
+    - test
+    - publish
+
+doc:
+    stage: build
+    script:
+    - echo "Generate sphinx documentation"
+    - cd ./docs
+    - make html
+    - cd ../
+
+tests:
+    stage: test
+    script:
+    - cd ..
+    - export PYTHONPATH="$PWD"
+    - cd $CI_PROJECT_DIR
+    - bash -c "python -m coverage run ./tests/test.py"
+    - bash -c "python -m coverage report"
+
+production:
+    stage: publish
+    script:
+    - echo "publish phase"
+    - cat $PYPIRC > /tmp/.pypirc
+    - python setup.py sdist bdist-wheel
+    - python -m twine upload --repository gitlab dist/${CI_PROJECT_NAME}-${CI_COMMIT_TAG/v}-py3-none-any.whl --config-file /tmp/.pypirc
+    only:
+        - tags
