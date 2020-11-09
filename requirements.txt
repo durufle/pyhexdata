@@ -1,0 +1,5 @@
+numpy
+Sphinx
+sphinx-rtd-theme
+coverage
+twine
