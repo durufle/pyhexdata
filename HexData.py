@@ -1,5 +1,6 @@
 
 import numpy as np
+import math
 
 
 class HexData:
@@ -10,7 +11,7 @@ class HexData:
     version = "0.1.0"
     __version__ = version
 
-    def __init__(self, value=None, nr_bytes=None):
+    def __init__(self, value=None, padding=None):
         """
         The function __init__ initialize the object HexData from a integer value or a hexdecimal string value with or
         without spaces or a numpy array dtyped np.uint8.
@@ -18,7 +19,8 @@ class HexData:
 
         Input:
            - value (int, str or numpy array, optional): the value to pass to HexData
-           - nr_bytes (int, optional): the number of bytes to keep
+           - padding (int, optional): the number of bytes to keep (could be higher or smaller than the real number
+           of bytes)
         Output:
            - None
         """
@@ -28,15 +30,23 @@ class HexData:
             elif isinstance(value, bytes):
                 self._data = np.frombuffer(value, dtype=np.uint8)
             elif isinstance(value, str):
-                self._data = np.frombuffer(bytes.fromhex(value), dtype=np.uint8)
+                if len(value) % 2 == 1:
+                        value = "0" + value
+
+                # String read
+                byte_value = bytes.fromhex(value)
+                self._data = np.frombuffer(byte_value, dtype=np.uint8)
             elif isinstance(value, int):
-                value = "{:x}".format(value)
-                self._data = np.frombuffer(bytes.fromhex(value), dtype=np.uint8)
+                nr_bytes = math.ceil(value.bit_length() / 8.)
+
+                # Integer read
+                byte_value = value.to_bytes(nr_bytes, "big", signed=False)
+                self._data = np.frombuffer(byte_value, dtype=np.uint8)
             else:
                 self._data = None
 
-        if not(nr_bytes is None):
-            self.padding(nr_bytes)
+        if padding is not None:
+            self.padding(padding)
 
     def get_value(self):
         """
@@ -88,9 +98,7 @@ class HexData:
            - None
         """
         if not (self._data is None):
-            tmp = np.copy(self._data).astype(np.int64)
-            tmp = np.left_shift(tmp, np.arange(len(tmp)-1, -1, -1)*8)
-            return np.sum(tmp)
+            return int.from_bytes(self._data.tobytes(), "big", signed=False)
         return None
 
     def padding(self, nr_bytes):
