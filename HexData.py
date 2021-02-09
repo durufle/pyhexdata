@@ -30,6 +30,8 @@ class HexData:
             elif isinstance(value, bytes):
                 self._data = np.frombuffer(value, dtype=np.uint8)
             elif isinstance(value, str):
+                value = value.replace(" ", "")
+
                 if len(value) % 2 == 1:
                         value = "0" + value
 
