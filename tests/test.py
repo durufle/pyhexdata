@@ -4,7 +4,7 @@ import scipy.stats as scipy_stats
 from pyhexdata.HexData import HexData
 
 
-class HexData_test(unittest.TestCase):
+class HexData_Test(unittest.TestCase):
     # Values normal
     numpy_value = np.array([158, 63, 152, 5, 253, 234, 57, 135, 44, 141, 62, 65, 160, 214, 144, 196, 20, 62,
                             91, 121, 105, 33, 162, 97, 148, 107, 112, 50, 190, 151, 198, 235, 175, 12, 42, 207,
