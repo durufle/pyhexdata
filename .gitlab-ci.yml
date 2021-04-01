@@ -22,9 +22,7 @@ doc:
 tests:
     stage: test
     script:
-    - cd ..
     - export PYTHONPATH="$PWD"
-    - cd $CI_PROJECT_DIR
     - bash -c "python -m coverage run ./tests/test.py"
     - bash -c "python -m coverage report"
 
