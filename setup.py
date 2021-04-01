@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
     
 setup(name='pyhexdata',
-      version='0.1.0',
+      version='0.2.0',
       
       description='Hex data conversion',
       long_description=long_description,
