@@ -9,6 +9,7 @@ default:
 stages:
     - build
     - test
+    - publish
 
 doc:
     stage: build
@@ -32,4 +33,5 @@ production:
     - python setup.py sdist bdist_wheel
     - TWINE_PASSWORD=${DEPLOY_TOKEN_PASSWORD} TWINE_USERNAME=${DEPLOY_TOKEN_USERNAME}-deploy-token python -m twine upload --repository-url https://git.ul-ts.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
     only:
-        - tags
+        variables:
+            - $PUBLISH == "ON"
