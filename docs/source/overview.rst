@@ -54,11 +54,11 @@ Documentation update
 --------------------
 
 In order to update the documentation, you need :program:`sphinx`.
-To generate the documentation, use the following command under docs sub-folder:
+To generate the documentation, use the following command under root directory:
 
 .. code-block:: bash
 
-    $ make html
+    $ python setup.py build_sphinx
 
 References
 ==========
