@@ -4,4 +4,6 @@ sphinx-rtd-theme
 coverage
 twine
 scipy
-
+wheel
+devpi-web
+devpi-client
