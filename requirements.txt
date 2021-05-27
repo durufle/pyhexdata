@@ -1,9 +1,10 @@
-numpy
 Sphinx
 sphinx-rtd-theme
 coverage
 twine
-scipy
 wheel
 devpi-web
 devpi-client
+bump2version
+numpy
+scipy
