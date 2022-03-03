@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import scipy.stats as scipy_stats
-from pyhexdata.HexData import HexData
+from pyhexdata.pyhexdata.HexData import HexData
 
 
 class HexData_Test(unittest.TestCase):
@@ -132,12 +132,12 @@ class HexData_Test(unittest.TestCase):
         unique, counts = np.unique(bytes_0, return_counts=True)
         self.assertTrue(np.all(unique == np.arange(256)))
         statistic, p = scipy_stats.chisquare(counts)
-        # self.assertTrue(p > 0.05)
+        self.assertTrue(p > 0.05)
 
         unique, counts = np.unique(bytes_1, return_counts=True)
         self.assertTrue(np.all(unique == np.arange(256)))
         statistic, p = scipy_stats.chisquare(counts)
-        # self.assertTrue(p > 0.05)
+        self.assertTrue(p > 0.05)
 
 
 if __name__ == '__main__':
