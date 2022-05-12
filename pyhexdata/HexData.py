@@ -24,6 +24,7 @@ class HexData:
         Output:
            - None
         """
+        self._data = np.array([])
         if not(value is None):
             if isinstance(value, np.ndarray):
                 self._data = value.astype(np.uint8)
@@ -49,7 +50,7 @@ class HexData:
                 byte_value = value.to_bytes(nr_bytes, "big", signed=False)
                 self._data = np.frombuffer(byte_value, dtype=np.uint8)
             else:
-                self._data = None
+                raise TypeError("This type is not allowed")
 
         if padding is not None:
             self.padding(padding)
@@ -65,6 +66,17 @@ class HexData:
         """
         return self._data
 
+    def to_list(self):
+        """
+        This function get the value of the numpy array
+
+        Input:
+           - None
+        Output:
+           - None
+        """
+        return self._data.tolist()
+
     def to_string(self, spaces=True):
         """
         This function converts the numpy array to string with spaces
@@ -74,12 +86,70 @@ class HexData:
         Output:
            - None
         """
-        if not(self._data is None):
+        if len(self) > 0:
             if spaces:
                 return " ".join(["{:02x}".format(x) for x in self._data])
             else:
                 return "".join(["{:02x}".format(x) for x in self._data])
-        return None
+        return ""
+
+    def to_bytes(self):
+        """
+        This function converts the numpy array to string with spaces
+
+        Input:
+           - spaces (bool; optional): if True, spaces between each byte, without spaces either
+        Output:
+           - None
+        """
+        return self._data.tobytes()
+
+    def to_number(self):
+        """
+        This function converts the numpy array into the integer value represented by the entire array
+
+        Input:
+           - None
+        Output:
+           - None
+        """
+        if len(self) > 0:
+            return int.from_bytes(self._data.tobytes(), "big", signed=False)
+        return 0
+
+    def padding(self, nr_bytes):
+        """
+        This function forces the padding of the _data attribute internally
+
+        Input:
+           - nr_bytes (int): the number of bytes of the _data attribute
+        Output:
+           - None
+        """
+        diff = nr_bytes - len(self)
+        if diff > 0:
+            self._data = np.concatenate((np.zeros(diff, dtype=np.uint8), self._data))
+        elif diff < 0:
+            self._data = self._data[-diff:]
+        else:
+            pass
+
+    def right_padding(self, nr_bytes):
+        """
+        This function forces the padding of the _data attribute internally
+
+        Input:
+           - nr_bytes (int): the number of bytes of the _data attribute
+        Output:
+           - None
+        """
+        diff = nr_bytes - self._data.shape[0]
+        if diff > 0:
+            self._data = np.concatenate((self._data, np.zeros(diff, dtype=np.uint8)))
+        elif diff < 0:
+            self._data = self._data[:-diff]
+        else:
+            pass
 
     def to_send_cmd_string(self, extended_LC=False):
         """
@@ -93,7 +163,7 @@ class HexData:
         apdu_format = ""
         cmd = ""
         index = 0
-        if not(self._data is None):
+        if len(self) > 0:
             ln = self._data.shape[0]
 
             # CLA
@@ -147,7 +217,7 @@ class HexData:
         """
         apdu_format = ""
         cmd = ""
-        if not(self._data is None):
+        if len(self) > 0:
             ln = self._data.shape[0]
 
             if ln > 2:
@@ -166,66 +236,6 @@ class HexData:
 
         return None
 
-    def to_bytes(self):
-        """
-        This function converts the numpy array to string with spaces
-
-        Input:
-           - spaces (bool; optional): if True, spaces between each byte, without spaces either
-        Output:
-           - None
-        """
-        if not(self._data is None):
-            return self._data.tobytes()
-        return None
-
-    def to_number(self):
-        """
-        This function converts the numpy array into the integer value represented by the entire array
-
-        Input:
-           - None
-        Output:
-           - None
-        """
-        if not (self._data is None):
-            return int.from_bytes(self._data.tobytes(), "big", signed=False)
-        return None
-
-    def padding(self, nr_bytes):
-        """
-        This function forces the padding of the _data attribute internally
-
-        Input:
-           - nr_bytes (int): the number of bytes of the _data attribute
-        Output:
-           - None
-        """
-        diff = nr_bytes - self._data.shape[0]
-        if diff > 0:
-            self._data = np.concatenate((np.zeros(diff, dtype=np.uint8), self._data))
-        elif diff < 0:
-            self._data = self._data[-diff:]
-        else:
-            pass
-
-    def right_padding(self, nr_bytes):
-        """
-        This function forces the padding of the _data attribute internally
-
-        Input:
-           - nr_bytes (int): the number of bytes of the _data attribute
-        Output:
-           - None
-        """
-        diff = nr_bytes - self._data.shape[0]
-        if diff > 0:
-            self._data = np.concatenate((self._data, np.zeros(diff, dtype=np.uint8)))
-        elif diff < 0:
-            self._data = self._data[:-diff]
-        else:
-            pass
-
     @staticmethod
     def rand(nr_bytes):
         """
@@ -241,6 +251,17 @@ class HexData:
         data = np.frombuffer(np.random.bytes(nr_bytes), dtype=np.uint8)
 
         return HexData(value=data)
+
+    def __xor__(self, other):
+        if isinstance(other, int) or isinstance(other, str):
+            other = HexData(other)
+            if len(other) != 1:
+                raise ValueError("The second parameter for XOR is not a byte")
+
+        return HexData(np.bitwise_xor(self._data, other._data))
+
+    def __str__(self):
+        return self.to_string(spaces=False)
 
     def __len__(self):
         return self._data.shape[0]
