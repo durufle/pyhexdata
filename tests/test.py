@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import scipy.stats as scipy_stats
-from pyhexdata.pyhexdata.HexData import HexData
+from pyhexdata.HexData import HexData
 
 
 class HexData_Test(unittest.TestCase):
