@@ -39,7 +39,7 @@ tests:
     - bash -c "python -m coverage report"
 
 production:
-    stage: deploy
+    stage: publish
     script:
     - echo "publish revision"
     - export PYTHONPATH="$PWD"
