@@ -1,11 +1,25 @@
 default:
-    image: python:3.6
+    image: python:3.8
 
-    before_script:
-        - echo "Initialize environment"
-        - apt-get update -qy
-        - apt-get install -y python3-sphinx
-        - pip install -r requirements.txt
+variables:
+    PIP_DIR: "/root/.pip"
+    PIP_FILE: "/root/.pip/pip.conf"
+
+before_script:
+    - echo "Initialize environment"
+    - apt-get update -qy
+    - apt-get install -y python-dev python3-pip
+    - apt-get install -y python3-sphinx
+    - 'mkdir $PIP_DIR'
+    - 'touch $PIP_FILE'
+    - 'echo [global] >> $PIP_FILE'
+    - 'echo index-url = http://$DEVPI_HOST:3141/$DEVPI_INDEX/+simple/ >> $PIP_FILE'
+    - 'echo [search] >> $PIP_FILE'
+    - 'echo index = http://$DEVPI_HOST:3141/$DEVPI_INDEX/ >> $PIP_FILE'
+    - 'echo [install] >> $PIP_FILE'
+    - 'echo trusted-host = $DEVPI_HOST >> $PIP_FILE'
+    - pip install -r requirements.txt
+
 stages:
     - build
     - test
@@ -16,11 +30,6 @@ builds:
     script:
     - echo "Generate package and sphinx documentation"
     - python setup.py bdist_wheel build_sphinx
-    artifacts:
-        name: $CI_PROJECT_NAME-$CI_JOB_STAGE-$CI_JOB_ID-$CI_COMMIT_REF_NAME
-        paths:
-            - ./dist
-            - ./build/sphinx/html
 
 tests:
     stage: test
@@ -30,11 +39,13 @@ tests:
     - bash -c "python -m coverage report"
 
 production:
-    stage: publish
+    stage: deploy
     script:
-    - echo "publish phase"
-    - python setup.py sdist bdist_wheel
-    - TWINE_PASSWORD=${DEPLOY_TOKEN_PASSWORD} TWINE_USERNAME=${DEPLOY_TOKEN_USERNAME}-deploy-token python -m twine upload --repository-url https://git.ul-ts.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+    - echo "publish revision"
+    - export PYTHONPATH="$PWD"
+    - bash -c "devpi use http://$DEVPI_HOST:3141/$DEVPI_INDEX"
+    - bash -c "devpi login $DEVPI_LOGIN --password=$DEVPI_PASSWORD"
+    - bash -c "devpi upload --format bdist_wheel --with-doc"
+
     only:
-        variables:
-            - $PUBLISH == "ON"
+    - tags
