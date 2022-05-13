@@ -8,7 +8,7 @@ class HexData:
     HexData class
     """
 
-    version = "0.1.0"
+    version = "0.2.0"
     __version__ = version
 
     def __init__(self, value=None, padding=None):
