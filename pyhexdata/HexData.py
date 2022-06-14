@@ -8,7 +8,7 @@ class HexData:
     HexData class
     """
 
-    version = "0.3.0"
+    version = "1.0.0"
     __version__ = version
 
     def __init__(self, value=None, padding=None):
@@ -55,7 +55,8 @@ class HexData:
         if padding is not None:
             self.padding(padding)
 
-    def get_value(self):
+    @property
+    def value(self):
         """
         This function get the value of the numpy array
 
@@ -66,7 +67,8 @@ class HexData:
         """
         return self._data
 
-    def to_list(self):
+    @property
+    def list(self):
         """
         This function get the value of the numpy array
 
@@ -77,7 +79,8 @@ class HexData:
         """
         return self._data.tolist()
 
-    def to_string(self, spaces=True):
+    @property
+    def string(self):
         """
         This function converts the numpy array to string with spaces
 
@@ -87,13 +90,25 @@ class HexData:
            - None
         """
         if len(self) > 0:
-            if spaces:
-                return " ".join(["{:02x}".format(x) for x in self._data])
-            else:
-                return "".join(["{:02x}".format(x) for x in self._data])
+            return "".join(["{:02x}".format(x) for x in self._data])
         return ""
 
-    def to_bytes(self):
+    @property
+    def string_spaced(self):
+        """
+        This function converts the numpy array to string with spaces
+
+        Input:
+           - spaces (bool; optional): if True, spaces between each byte, without spaces either
+        Output:
+           - None
+        """
+        if len(self) > 0:
+            return " ".join(["{:02x}".format(x) for x in self._data])
+        return ""
+
+    @property
+    def bytes(self):
         """
         This function converts the numpy array to string with spaces
 
@@ -104,7 +119,8 @@ class HexData:
         """
         return self._data.tobytes()
 
-    def to_number(self):
+    @property
+    def number(self):
         """
         This function converts the numpy array into the integer value represented by the entire array
 
@@ -147,7 +163,7 @@ class HexData:
         if diff > 0:
             self._data = np.concatenate((self._data, np.zeros(diff, dtype=np.uint8)))
         elif diff < 0:
-            self._data = self._data[:-diff]
+            self._data = self._data[:nr_bytes]
         else:
             pass
 
@@ -173,10 +189,20 @@ class HexData:
             if len(other) != 1:
                 raise ValueError("The second parameter for XOR is not a byte")
 
+        # Check len are same
+        if len(self) != len(other):
+            max_len = max(len(self), len(other))
+
+            if len(self) != max_len:
+                self.padding(max_len)
+
+            if len(other) != max_len:
+                other.padding(max_len)
+
         return HexData(np.bitwise_xor(self._data, other._data))
 
     def __str__(self):
-        return self.to_string(spaces=False)
+        return self.string_spaced
 
     def __len__(self):
         return self._data.shape[0]
@@ -233,17 +259,22 @@ class HexData:
             if size_slice != len(value):
                 raise ValueError("The sizes of index and values must be the same")
 
-        self._data[index] = value.get_value()
+        self._data[index] = value.value
 
     def __eq__(self, other):
         if isinstance(other, HexData):
             if len(self) != len(other):
                 return False
-            return np.alltrue(np.equal(self.get_value(), other.get_value()))
+            return np.alltrue(np.equal(self.value, other.value))
         else:
-            return self.to_number() == HexData(other).to_number()
+            return self.number == HexData(other).number
 
     def __add__(self, other):
         if not isinstance(other, HexData):
-            raise ValueError("One parameter is not a HexData object")
-        return HexData(np.concatenate((self.get_value(), other.get_value())))
+            raise ValueError("The second parameter is not a HexData object")
+        return HexData(np.concatenate((self.value, other.value)))
+
+    def __mul__(self, other):
+        if not isinstance(other, int):
+            raise ValueError("The second parameter is not an integer")
+        return HexData(np.tile(self.value, other))
