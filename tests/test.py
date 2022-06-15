@@ -271,6 +271,17 @@ class HexData_Test(unittest.TestCase):
         th_res = A.number ^ B.number
         self.assertEqual((A ^ B).number, th_res)
 
+        # Check for all types
+        A = HexData(0x53)
+        B = HexData(0xA5)
+        th_res = A.number ^ B.number
+        self.assertEqual((A ^ B).number, th_res)
+        self.assertEqual((A ^ B.value).number, th_res)
+        self.assertEqual((A ^ B.list).number, th_res)
+        self.assertEqual((A ^ B.string).number, th_res)
+        self.assertEqual((A ^ B.bytes).number, th_res)
+        self.assertEqual((A ^ B.number).number, th_res)
+
     def test_str(self):
         # A and B same lenght
         A = HexData.rand(4)
@@ -282,57 +293,75 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(len(HexData.rand(3)), 3)
 
     def test_getitem(self):
+        # Set value
         A = HexData("00112233445566778899AABBCCDDEEFF")
-        self.assertEqual(A[0], int("00", 16))
-        self.assertEqual(A[1], int("11", 16))
-        self.assertEqual(A[2], int("22", 16))
-        self.assertEqual(A[3], int("33", 16))
-        self.assertEqual(A[4], int("44", 16))
-        self.assertEqual(A[5], int("55", 16))
-        self.assertEqual(A[6], int("66", 16))
-        self.assertEqual(A[7], int("77", 16))
-        self.assertEqual(A[8], int("88", 16))
-        self.assertEqual(A[9], int("99", 16))
-        self.assertEqual(A[10], int("AA", 16))
-        self.assertEqual(A[11], int("BB", 16))
-        self.assertEqual(A[12], int("CC", 16))
-        self.assertEqual(A[13], int("DD", 16))
-        self.assertEqual(A[14], int("EE", 16))
-        self.assertEqual(A[15], int("FF", 16))
+
+        # Integer
+        self.assertTrue(A[0] == HexData("00"))
+        self.assertTrue(A[1] == HexData("11"))
+        self.assertTrue(A[2] == HexData("22"))
+        self.assertTrue(A[3] == HexData("33"))
+        self.assertTrue(A[4] == HexData("44"))
+        self.assertTrue(A[5] == HexData("55"))
+        self.assertTrue(A[6] == HexData("66"))
+        self.assertTrue(A[7] == HexData("77"))
+        self.assertTrue(A[8] == HexData("88"))
+        self.assertTrue(A[9] == HexData("99"))
+        self.assertTrue(A[10] == HexData("AA"))
+        self.assertTrue(A[11] == HexData("BB"))
+        self.assertTrue(A[12] == HexData("CC"))
+        self.assertTrue(A[13] == HexData("DD"))
+        self.assertTrue(A[14] == HexData("EE"))
+        self.assertTrue(A[15] == HexData("FF"))
 
         # Slices
-        self.assertEqual(A[3:8], int("3344556677", 16))
-        self.assertEqual(A[:5], int("0011223344", 16))
-        self.assertEqual(A[13:], int("DDEEFF", 16))
+        self.assertTrue(A[3:8] == HexData("3344556677"))
+        self.assertTrue(A[:5] == HexData("0011223344"))
+        self.assertTrue(A[13:] == HexData("DDEEFF"))
 
         # Numpy array
-        self.assertEqual(A[np.arange(3, 8)], int("3344556677", 16))
-        self.assertEqual(A[np.arange(5)], int("0011223344", 16))
-        self.assertEqual(A[np.arange(13, 16)], int("DDEEFF", 16))
+        self.assertTrue(A[np.arange(3, 8)] ==  HexData("3344556677"))
+        self.assertTrue(A[np.arange(5)] == HexData("0011223344"))
+        self.assertTrue(A[np.arange(13, 16)] == HexData("DDEEFF"))
 
         # List
-        self.assertEqual(A[[3, 4, 5, 6, 7]], int("3344556677", 16))
-        self.assertEqual(A[[0, 1, 2, 3, 4]], int("0011223344", 16))
-        self.assertEqual(A[[13, 14, 15]], int("DDEEFF", 16))
+        self.assertTrue(A[[3, 4, 5, 6, 7]] == HexData("3344556677"))
+        self.assertTrue(A[[0, 1, 2, 3, 4]] == HexData("0011223344"))
+        self.assertTrue(A[[13, 14, 15]] == HexData("DDEEFF"))
 
     def test_setitem(self):
         # Integer
         A = HexData(0, padding=16)
-        self.assertEqual(A.number, 0)
+        self.assertTrue(A == HexData(0, padding=16))
         A[3] = int("33", 16)
-        self.assertEqual(A[3], int("33", 16))
-        self.assertEqual(A[3], HexData(int("33", 16)))
+        self.assertTrue(A[3] == HexData("33"))
 
-        # Slices
-        A = HexData(0, padding=16)
-        A[:4] = HexData(int("00112233", 16), padding=4)
-        A[5:8] = int("556677", 16)
-        A[8:11] = [0x88, 0x99, 0xAA]
-        A[11:] = np.array([0xBB, 0xCC, 0xDD, 0xEE, 0xFF], dtype=np.uint8)
-        self.assertEqual(A[:4], int("00112233", 16))
-        self.assertEqual(A[5:8], int("556677", 16))
-        self.assertEqual(A[8:11], int("8899AA", 16))
-        self.assertEqual(A[11:], int("BBCCDDEEFF", 16))
+        # All types test
+        B = HexData("11223344")
+        # HexData
+        A = HexData(0, padding=4)
+        A[:4] = HexData("11223344")
+        self.assertTrue(A == B)
+        # Value
+        A = HexData(0, padding=4)
+        A[:4] = HexData("11223344").value
+        self.assertTrue(A == B)
+        # List
+        A = HexData(0, padding=4)
+        A[:4] = HexData("11223344").list
+        self.assertTrue(A == B)
+        # String
+        A = HexData(0, padding=4)
+        A[:4] = HexData("11223344").string
+        self.assertTrue(A == B)
+        # Bytes
+        A = HexData(0, padding=4)
+        A[:4] = HexData("11223344").bytes
+        self.assertTrue(A == B)
+        # Number
+        A = HexData(0, padding=4)
+        A[:4] = HexData("11223344").number
+        self.assertTrue(A == B)
 
     def test_equal(self):
         A = HexData("00112233445566778899AABBCCDDEEFF")
@@ -345,6 +374,15 @@ class HexData_Test(unittest.TestCase):
         A = HexData("00112233")
         B = HexData("00112233445566778899AABBCCDDEEFF")
         self.assertTrue(A != B)
+
+        # All types test
+        A = HexData("11223344")
+        self.assertTrue(A == HexData("11223344"))
+        self.assertTrue(A == HexData("11223344").value)
+        self.assertTrue(A == HexData("11223344").list)
+        self.assertTrue(A == HexData("11223344").string)
+        self.assertTrue(A == HexData("11223344").bytes)
+        self.assertTrue(A == HexData("11223344").number)
 
     def test_add(self):
         A = HexData("00112233")
