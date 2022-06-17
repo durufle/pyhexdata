@@ -1,6 +1,5 @@
 **unreleased**
 
-**v1.0.0**
 - override method __mul__
 - change methods (**get_value**,  **to_list**, **to_string**, **to_bytes** and **to_number**) to properties methods 
 (**value**,  **list**, **string**, **string_spaced**, **bytes** and **number**).
