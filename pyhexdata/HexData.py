@@ -8,9 +8,6 @@ class HexData:
     HexData class
     """
 
-    version = "1.0.0"
-    __version__ = version
-
     def __init__(self, value=None, padding=None):
         '''
         The function __init__ initialize the object HexData from a integer value or a hexdecimal string value with or
