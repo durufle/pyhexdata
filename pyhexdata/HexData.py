@@ -25,7 +25,7 @@ class HexData:
             elif isinstance(value, list):
                 self._data = np.array(value, dtype=np.uint8)
             elif isinstance(value, bytes):
-                self._data = np.frombuffer(value, dtype=np.uint8)
+                self._data = np.array(np.frombuffer(value, dtype=np.uint8))
             elif isinstance(value, np.uint8):
                 self._data = np.array([value], dtype=np.uint8)
             elif isinstance(value, str):
@@ -36,13 +36,13 @@ class HexData:
 
                 # String read
                 byte_value = bytes.fromhex(value)
-                self._data = np.frombuffer(byte_value, dtype=np.uint8)
+                self._data = np.array(np.frombuffer(byte_value, dtype=np.uint8, like=self._data))
             elif isinstance(value, int) or isinstance(value, int):
                 nr_bytes = max(1, math.ceil(value.bit_length() / 8.))
 
                 # Integer read
                 byte_value = value.to_bytes(nr_bytes, "big", signed=False)
-                self._data = np.frombuffer(byte_value, dtype=np.uint8)
+                self._data = np.array(np.frombuffer(byte_value, dtype=np.uint8))
             else:
                 raise TypeError("This type is not allowed")
 
@@ -150,7 +150,7 @@ class HexData:
         @param nr_bytes (int): number of bytes of the random to generate.
         @return: HexData object with random bytes
         '''
-        data = np.frombuffer(np.random.bytes(nr_bytes), dtype=np.uint8)
+        data = np.array(np.frombuffer(np.random.bytes(nr_bytes), dtype=np.uint8))
 
         return HexData(value=data)
 
