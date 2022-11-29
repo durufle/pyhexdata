@@ -26,6 +26,10 @@ class HexData_Test(unittest.TestCase):
                   b'\xc1.\xebz\x15\xed:3A\x06 \x12\x888\x90H2\xe7j\x05X\xf7]\xf8\xf2\xca6\x8et\xc0A0\xb0\xec\x97Z\xdd' \
                   b'\x92N&\xa4\x18\xc5\xef3F\xac\xe8Co\xdc\xf6\xbe\xdeI#`\x8e T\xc9]p\xea\x1a0\xfd\xbc\xbb.\x15\xfe\xff' \
                   b'\x1f\xd8\x93\x198\xe2\xb1:\xb0?.\xb4C#\x08\x17\x9a\xad\xa3'
+    bytearray_value = bytearray(b'\x9e?\x98\x05\xfd\xea9\x87,\x8d>A\xa0\xd6\x90\xc4\x14>[yi!\xa2a\x94kp2\xbe\x97\xc6\xeb\xaf\x0c*\xcf' \
+                                b'\xc1.\xebz\x15\xed:3A\x06 \x12\x888\x90H2\xe7j\x05X\xf7]\xf8\xf2\xca6\x8et\xc0A0\xb0\xec\x97Z\xdd' \
+                                b'\x92N&\xa4\x18\xc5\xef3F\xac\xe8Co\xdc\xf6\xbe\xdeI#`\x8e T\xc9]p\xea\x1a0\xfd\xbc\xbb.\x15\xfe\xff' \
+                                b'\x1f\xd8\x93\x198\xe2\xb1:\xb0?.\xb4C#\x08\x17\x9a\xad\xa3')
     list_value = list([158, 63, 152, 5, 253, 234, 57, 135, 44, 141, 62, 65, 160, 214, 144, 196, 20, 62,
                         91, 121, 105, 33, 162, 97, 148, 107, 112, 50, 190, 151, 198, 235, 175, 12, 42, 207,
                         193, 46, 235, 122, 21, 237, 58, 51, 65, 6, 32, 18, 136, 56, 144, 72, 50, 231,
@@ -41,6 +45,7 @@ class HexData_Test(unittest.TestCase):
     str_spaced_value_padded_4_bytes = "17 9a ad a3"
     str_value_padded_4_bytes = "179aada3"
     bytes_value_padded_4_bytes = b'\x17\x9a\xad\xa3'
+    bytearray_value_padded_4_bytes = bytearray(b'\x17\x9a\xad\xa3')
     list_value_padded_4_bytes = list([23, 154, 173, 163])
 
     # Value padded 133 bytes
@@ -63,6 +68,10 @@ class HexData_Test(unittest.TestCase):
                   b'\xc1.\xebz\x15\xed:3A\x06 \x12\x888\x90H2\xe7j\x05X\xf7]\xf8\xf2\xca6\x8et\xc0A0\xb0\xec\x97Z\xdd' \
                   b'\x92N&\xa4\x18\xc5\xef3F\xac\xe8Co\xdc\xf6\xbe\xdeI#`\x8e T\xc9]p\xea\x1a0\xfd\xbc\xbb.\x15\xfe\xff' \
                   b'\x1f\xd8\x93\x198\xe2\xb1:\xb0?.\xb4C#\x08\x17\x9a\xad\xa3'
+    bytearray_value_padded_133_bytes = bytearray(b'\x00\x00\x00\x00\x00\x9e?\x98\x05\xfd\xea9\x87,\x8d>A\xa0\xd6\x90\xc4\x14>[yi!\xa2a\x94kp2\xbe\x97\xc6\xeb\xaf\x0c*\xcf' \
+                                   b'\xc1.\xebz\x15\xed:3A\x06 \x12\x888\x90H2\xe7j\x05X\xf7]\xf8\xf2\xca6\x8et\xc0A0\xb0\xec\x97Z\xdd' \
+                                   b'\x92N&\xa4\x18\xc5\xef3F\xac\xe8Co\xdc\xf6\xbe\xdeI#`\x8e T\xc9]p\xea\x1a0\xfd\xbc\xbb.\x15\xfe\xff' \
+                                   b'\x1f\xd8\x93\x198\xe2\xb1:\xb0?.\xb4C#\x08\x17\x9a\xad\xa3')
     list_value_padded_133_bytes = list([0, 0, 0, 0, 0, 158, 63, 152, 5, 253, 234, 57, 135, 44, 141, 62, 65, 160,
                                      214, 144, 196, 20, 62,  91, 121, 105, 33, 162, 97, 148, 107, 112, 50, 190,
                                      151, 198, 235, 175, 12, 42, 207, 193, 46, 235, 122, 21, 237, 58, 51, 65, 6,
@@ -78,6 +87,7 @@ class HexData_Test(unittest.TestCase):
     str_spaced_value_right_padded_4_bytes = "9e 3f 98 05"
     str_value_right_padded_4_bytes = "9e3f9805"
     bytes_value_right_padded_4_bytes = b'\x9e?\x98\x05'
+    bytearray_value_right_padded_4_bytes = bytearray(b'\x9e?\x98\x05')
     list_value_right_padded_4_bytes = list([158, 63, 152, 5])
 
     # Value padded 133 bytes
@@ -101,6 +111,10 @@ class HexData_Test(unittest.TestCase):
                                    b'\xc1.\xebz\x15\xed:3A\x06 \x12\x888\x90H2\xe7j\x05X\xf7]\xf8\xf2\xca6\x8et\xc0A0\xb0\xec\x97Z\xdd' \
                                    b'\x92N&\xa4\x18\xc5\xef3F\xac\xe8Co\xdc\xf6\xbe\xdeI#`\x8e T\xc9]p\xea\x1a0\xfd\xbc\xbb.\x15\xfe\xff' \
                                    b'\x1f\xd8\x93\x198\xe2\xb1:\xb0?.\xb4C#\x08\x17\x9a\xad\xa3\x00\x00\x00\x00\x00'
+    bytearray_value_right_padded_133_bytes = bytearray(b'\x9e?\x98\x05\xfd\xea9\x87,\x8d>A\xa0\xd6\x90\xc4\x14>[yi!\xa2a\x94kp2\xbe\x97\xc6\xeb\xaf\x0c*\xcf' \
+                                         b'\xc1.\xebz\x15\xed:3A\x06 \x12\x888\x90H2\xe7j\x05X\xf7]\xf8\xf2\xca6\x8et\xc0A0\xb0\xec\x97Z\xdd' \
+                                         b'\x92N&\xa4\x18\xc5\xef3F\xac\xe8Co\xdc\xf6\xbe\xdeI#`\x8e T\xc9]p\xea\x1a0\xfd\xbc\xbb.\x15\xfe\xff' \
+                                         b'\x1f\xd8\x93\x198\xe2\xb1:\xb0?.\xb4C#\x08\x17\x9a\xad\xa3\x00\x00\x00\x00\x00')
     list_value_right_padded_133_bytes = list([158, 63, 152, 5, 253, 234, 57, 135, 44, 141, 62, 65, 160,
                                         214, 144, 196, 20, 62, 91, 121, 105, 33, 162, 97, 148, 107, 112, 50, 190,
                                         151, 198, 235, 175, 12, 42, 207, 193, 46, 235, 122, 21, 237, 58, 51, 65, 6,
@@ -122,6 +136,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value)
         self.assertEqual(HD.string, self.str_value)
         self.assertEqual(HD.bytes, self.bytes_value)
+        self.assertEqual(HD.bytearray, self.bytearray_value)
         self.assertEqual(HD.list, self.list_value)
 
         # Integer
@@ -131,6 +146,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value)
         self.assertEqual(HD.string, self.str_value)
         self.assertEqual(HD.bytes, self.bytes_value)
+        self.assertEqual(HD.bytearray, self.bytearray_value)
         self.assertEqual(HD.list, self.list_value)
 
         # String spaced
@@ -140,6 +156,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value)
         self.assertEqual(HD.string, self.str_value)
         self.assertEqual(HD.bytes, self.bytes_value)
+        self.assertEqual(HD.bytearray, self.bytearray_value)
         self.assertEqual(HD.list, self.list_value)
 
         # String without spaced
@@ -149,6 +166,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value)
         self.assertEqual(HD.string, self.str_value)
         self.assertEqual(HD.bytes, self.bytes_value)
+        self.assertEqual(HD.bytearray, self.bytearray_value)
         self.assertEqual(HD.list, self.list_value)
 
         # Bytes
@@ -158,6 +176,17 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value)
         self.assertEqual(HD.string, self.str_value)
         self.assertEqual(HD.bytes, self.bytes_value)
+        self.assertEqual(HD.bytearray, self.bytearray_value)
+        self.assertEqual(HD.list, self.list_value)
+
+        # ByteArray
+        HD = HexData(value=self.bytearray_value)
+        np.testing.assert_array_equal(HD.value, self.numpy_value)
+        self.assertEqual(HD.number, self.int_value)
+        self.assertEqual(HD.string_spaced, self.str_spaced_value)
+        self.assertEqual(HD.string, self.str_value)
+        self.assertEqual(HD.bytes, self.bytes_value)
+        self.assertEqual(HD.bytearray, self.bytearray_value)
         self.assertEqual(HD.list, self.list_value)
 
         # List
@@ -167,6 +196,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value)
         self.assertEqual(HD.string, self.str_value)
         self.assertEqual(HD.bytes, self.bytes_value)
+        self.assertEqual(HD.bytearray, self.bytearray_value)
         self.assertEqual(HD.list, self.list_value)
 
     def test_padding(self):
@@ -177,6 +207,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value_padded_4_bytes)
         self.assertEqual(HD.string, self.str_value_padded_4_bytes)
         self.assertEqual(HD.bytes, self.bytes_value_padded_4_bytes)
+        self.assertEqual(HD.bytearray, self.bytearray_value_padded_4_bytes)
         self.assertEqual(HD.list, self.list_value_padded_4_bytes)
 
         # Hex data padding 133 bytes init
@@ -186,6 +217,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value_padded_133_bytes)
         self.assertEqual(HD.string, self.str_value_padded_133_bytes)
         self.assertEqual(HD.bytes, self.bytes_value_padded_133_bytes)
+        self.assertEqual(HD.bytearray, self.bytearray_value_padded_133_bytes)
         self.assertEqual(HD.list, self.list_value_padded_133_bytes)
 
         # Hex data padding 4 bytes
@@ -196,6 +228,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value_padded_4_bytes)
         self.assertEqual(HD.string, self.str_value_padded_4_bytes)
         self.assertEqual(HD.bytes, self.bytes_value_padded_4_bytes)
+        self.assertEqual(HD.bytearray, self.bytearray_value_padded_4_bytes)
         self.assertEqual(HD.list, self.list_value_padded_4_bytes)
 
         # Hex data padding 133 bytes
@@ -206,6 +239,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value_padded_133_bytes)
         self.assertEqual(HD.string, self.str_value_padded_133_bytes)
         self.assertEqual(HD.bytes, self.bytes_value_padded_133_bytes)
+        self.assertEqual(HD.bytearray, self.bytearray_value_padded_133_bytes)
         self.assertEqual(HD.list, self.list_value_padded_133_bytes)
 
     def test_right_padding(self):
@@ -217,6 +251,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value_right_padded_4_bytes)
         self.assertEqual(HD.string, self.str_value_right_padded_4_bytes)
         self.assertEqual(HD.bytes, self.bytes_value_right_padded_4_bytes)
+        self.assertEqual(HD.bytearray, self.bytearray_value_right_padded_4_bytes)
         self.assertEqual(HD.list, self.list_value_right_padded_4_bytes)
 
         # Hex data padding 133 bytes
@@ -227,6 +262,7 @@ class HexData_Test(unittest.TestCase):
         self.assertEqual(HD.string_spaced, self.str_spaced_value_right_padded_133_bytes)
         self.assertEqual(HD.string, self.str_value_right_padded_133_bytes)
         self.assertEqual(HD.bytes, self.bytes_value_right_padded_133_bytes)
+        self.assertEqual(HD.bytearray, self.bytearray_value_right_padded_133_bytes)
         self.assertEqual(HD.list, self.list_value_right_padded_133_bytes)
 
     def test_rand(self):

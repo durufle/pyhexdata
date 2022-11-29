@@ -26,6 +26,8 @@ class HexData:
                 self._data = np.array(value, dtype=np.uint8)
             elif isinstance(value, bytes):
                 self._data = np.array(np.frombuffer(value, dtype=np.uint8))
+            elif isinstance(value, bytearray):
+                self._data = np.array(np.frombuffer(value, dtype=np.uint8))
             elif isinstance(value, np.uint8):
                 self._data = np.array([value], dtype=np.uint8)
             elif isinstance(value, str):
@@ -97,6 +99,15 @@ class HexData:
         @return: bytes
         '''
         return self._data.tobytes()
+
+    @property
+    def bytearray(self):
+        '''
+        This property methods returns the bytes value
+
+        @return: bytes
+        '''
+        return bytearray(self._data)
 
     @property
     def number(self):
@@ -272,7 +283,7 @@ class HexData:
         '''
         Override method to for equals condition test. Check that self and other are equals in value and length.
 
-        @param other: Value to compared. It could be all HexData allowed types.
+        @param other: Value to compare. It could be all HexData allowed types.
         @return: conditional test comparison
         '''
         if not isinstance(other, HexData):
