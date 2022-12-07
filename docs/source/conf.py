@@ -23,7 +23,7 @@ copyright = '2020, UL-IMS'
 author = 'Stephane Potti'
 
 # The full version, including alpha/beta/rc tags
-version = '1.0.0'
+version = '1.1.0'
 release = version
 
 

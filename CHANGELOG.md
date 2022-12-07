@@ -1,5 +1,8 @@
 **unreleased**
 
+**v1.1.0**
+- Add bytearray support
+
 **v1.0.0**
 
 - override method __mul__
