@@ -11,7 +11,26 @@ ls
 Installation
 ============
 
-This tools relies `numpy` package.
+This package is available under devpi server. So you can install it using pip tools as follow:
+
+.. code-block:: bash
+
+    pip install pyavtech
+
+.. note::
+
+    Refer to initialize pip application note in order to point on internal devpi server.
+
+else you have the ability to install it using wheel distribution package:
+
+.. code-block:: bash
+
+    pip install pyavtech-x.y.z-py3-none-any.whl
+
+.. note::
+
+    Replace x.y.z by the package version number.
+
 
 
 Package development
@@ -50,15 +69,108 @@ Note that package will be used by other people, so stability matters.
     If the implementation is easy to explain, it may be a good idea.
     Namespaces are one honking great idea -- let's do more of those!
 
-Documentation update
---------------------
+All necessary packages need to develop are identifed in the requirements.txt file.
 
-In order to update the documentation, you need :program:`sphinx`.
-To generate the documentation, use the following command under root directory:
+After cloning, create a virtual environement, activate it and install necessary package:
+
+.. code-block:: bash
+
+    $ git clone ssh://git@git.ul-ts.com:5022/ims-se/hardware-team/pybench/pyavtech.git
+    $ cd pyavtech
+    $ python -m python3 -m venv venv
+    $ .\venv\Script\activate.bat
+    (venv) $ pip install -r requirements.txt
+
+To generate python package in wheel format locally:
+
+.. code-block:: bash
+
+    $ python setup.py bdist_wheel
+
+
+Documentation and package update
+--------------------------------
+
+To generate the documentation, use the following command under docs sub-folder:
+
+.. code-block:: bash
+
+    $ make html
+    $ make latex
+
+.. warning::
+
+    To generate latex format, the TeX Live utility must be installed first.
+
+
+Under root directory you can generate the wheel package and the documentation using the following command:
 
 .. code-block:: bash
 
     $ python setup.py build_sphinx
+
+finally you can build wheel package and documentation and the upload to the devpi server using:
+
+.. code-block:: bash
+
+    $ devpi upload --format=bdist_wheel --with-docsAll necessary packages need to develop are identifed in the requirements.txt file.
+
+After cloning, create a virtual environement, activate it and install necessary package:
+
+.. code-block:: bash
+
+    $ git clone ssh://git@git.ul-ts.com:5022/ims-se/hardware-team/pybench/pyavtech.git
+    $ cd pyavtech
+    $ python -m python3 -m venv venv
+    $ .\venv\Script\activate.bat
+    (venv) $ pip install -r requirements.txt
+
+To generate python package in wheel format locally:
+
+.. code-block:: bash
+
+    $ python setup.py bdist_wheel
+
+
+Documentation and package update
+--------------------------------
+
+To generate the documentation, use the following command under docs sub-folder:
+
+.. code-block:: bash
+
+    $ make html
+    $ make latex
+
+.. warning::
+
+    To generate latex format, the TeX Live utility must be installed first.
+
+
+Under root directory you can generate the wheel package and the documentation using the following command:
+
+.. code-block:: bash
+
+    $ python setup.py build_sphinx
+
+finally you can build wheel package and documentation and the upload to the devpi server using:
+
+.. code-block:: bash
+
+    $ devpi upload --format=bdist_wheel --with-docs
+
+
+.. warning::
+
+    This operation is automatically done using continuous integration at tag creation. Manual operation can be done
+    for testing purpose only, but in any case package versioning must be done previously and follow the semantic rules.
+
+
+.. warning::
+
+    This operation is automatically done using continuous integration at tag creation. Manual operation can be done
+    for testing purpose only, but in any case package versioning must be done previously and follow the semantic rules.
+
 
 References
 ==========
