@@ -37,11 +37,8 @@ tests:
     - export PYTHONPATH="$PWD"
     - bash -c "python -m coverage run ./tests/test.py"
     - bash -c "python -m coverage report"
-    - bash -c "python -m coverage xml"
-    artifacts:
-        reports:
-            cobertura: 'coverage.xml'
-
+    coverage: '/TOTAL.*\s+(\d+\%)/'
+    
 production:
     stage: publish
     script:
