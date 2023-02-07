@@ -62,7 +62,7 @@ tests:
     
 production:
     extends: .before_script_template
-    stage: publish
+    stage: deploy
     image: python:3.8
     script:
     - echo "publish revision"
