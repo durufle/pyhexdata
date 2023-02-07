@@ -37,12 +37,11 @@ tests:
     - export PYTHONPATH="$PWD"
     - bash -c "python -m coverage run ./tests/test.py"
     - bash -c "python -m coverage report"
+    - bash -c "python -m coverage xml"
     artifacts:
-      reports:
-        coverage_report:
-          coverage_format: cobertura
-          path: coverage/cobertura-coverage.xml
-          
+        reports:
+            cobertura: 'coverage.xml'
+
 production:
     stage: publish
     script:
