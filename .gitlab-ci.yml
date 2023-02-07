@@ -31,7 +31,6 @@ variables:
   before_script:
     - echo "Initialize environment"
     - apt-get update -qy
-    - apt-get install -y python-dev python3-pip
     - apt-get install -y python3-sphinx
     - 'mkdir $PIP_DIR'
     - 'touch $PIP_FILE'
@@ -41,6 +40,7 @@ variables:
     - 'echo index = http://$DEVPI_HOST:3141/$DEVPI_INDEX/ >> $PIP_FILE'
     - 'echo [install] >> $PIP_FILE'
     - 'echo trusted-host = $DEVPI_HOST >> $PIP_FILE'
+    - python -m pip install --upgrade pip
     - pip install -r requirements.txt
 
 builds:
