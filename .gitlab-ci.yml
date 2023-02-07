@@ -1,11 +1,11 @@
 stages:
-    - check
     - build
     - test
+    - analyse
     - deploy
 
 sonarqube-check:
-  stage: check
+  stage: analyse
   image:
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
@@ -59,8 +59,14 @@ tests:
     - export PYTHONPATH="$PWD"
     - bash -c "python -m coverage run ./tests/test.py"
     - bash -c "python -m coverage report"
+    - bash -c "python -m coverage xml"
     coverage: '/TOTAL.*\s+(\d+\%)/'
-    
+    artifacts:
+      reports:
+        coverage_report:
+          coverage_format: cobertura
+          path: coverage.xml
+
 production:
     extends: .before_script_template
     stage: deploy
