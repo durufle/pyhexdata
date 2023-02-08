@@ -57,7 +57,7 @@ tests:
     image: python:3.8
     script:
     - export PYTHONPATH="$PWD"
-    - bash -c "coverage run -m unittest discover
+    - bash -c "coverage run -m unittest discover"
     - bash -c "python -m coverage report"
     - bash -c "python -m coverage xml"
     coverage: '/TOTAL.*\s+(\d+\%)/'
