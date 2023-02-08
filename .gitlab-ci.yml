@@ -23,6 +23,9 @@ sonarqube-check:
     - merge_requests
     - master # or the name of your main branch
     - develop
+  dependencies:
+    - tests
+
 variables:
     PIP_DIR: "/root/.pip"
     PIP_FILE: "/root/.pip/pip.conf"
@@ -56,10 +59,9 @@ tests:
     stage: test
     image: python:3.8
     script:
-    - export PYTHONPATH="$PWD"
-    - bash -c "coverage run -m unittest discover"
-    - bash -c "coverage report"
-    - bash -c "coverage xml"
+    - coverage run -m unittest discover
+    - coverage report
+    - coverage xml
     coverage: '/TOTAL.*\s+(\d+\%)/'
     artifacts:
       reports:
