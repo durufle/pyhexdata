@@ -17,7 +17,6 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script:
-    - cat coverage.xml
     - sonar-scanner
   allow_failure: true
   only:
@@ -59,8 +58,8 @@ tests:
     script:
     - export PYTHONPATH="$PWD"
     - bash -c "coverage run -m unittest discover"
-    - bash -c "python -m coverage report"
-    - bash -c "python -m coverage xml"
+    - bash -c "coverage report"
+    - bash -c "coverage xml"
     coverage: '/TOTAL.*\s+(\d+\%)/'
     artifacts:
       reports:
