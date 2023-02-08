@@ -4,6 +4,7 @@ build
 *egg*
 dist
 .coverage
+coverage.xml
 htmlcov
 .idea
 venv
