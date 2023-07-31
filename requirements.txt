@@ -1,6 +1,5 @@
 Sphinx
 coverage
-twine
 wheel
 devpi-client==5.2.3
 bump2version

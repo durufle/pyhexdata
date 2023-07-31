@@ -38,7 +38,7 @@ class HexData:
 
                 # String read
                 byte_value = bytes.fromhex(value)
-                self._data = np.array(np.frombuffer(byte_value, dtype=np.uint8, like=self._data))
+                self._data = np.array(np.frombuffer(byte_value, dtype=np.uint8))
             elif isinstance(value, int) or isinstance(value, int):
                 nr_bytes = max(1, math.ceil(value.bit_length() / 8.))
 
