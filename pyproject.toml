@@ -41,7 +41,7 @@ exclude = ['tests*', 'venv*', 'docs*']
 include-package-data = true
 
 [tool.pylint.master]
-ignore="conf.py"
+ignore="conf.py, test.py"
 
 [tool.pylint.format]
 max-line-length = 120
