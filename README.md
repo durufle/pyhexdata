@@ -55,18 +55,18 @@ To generate the package distribution :
 
 ```bash
 # Package distribution only
-(.venv) python -m build
+(venv) python -m build
 ```
 
 To execute test:
 
 ```bash
-(.venv) pytest
+(venv) pytest
 ```
 To see coverage in html execute the following command :
 
 ```bash
-(.venv)  coverage html
+(venv)  coverage html
 ```
 
 by default coverage html report are in ```htmlcov``` folder.
