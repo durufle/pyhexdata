@@ -1,4 +1,3 @@
-
 import numpy as np
 import math
 
@@ -9,7 +8,7 @@ class HexData:
     """
 
     def __init__(self, value=None, padding=None):
-        '''
+        """
         The function __init__ initialize the object HexData from a integer value or a hexdecimal string value with or
         without spaces or a numpy array dtyped np.uint8.
         The final value is stored in a numpy array format inside the class.
@@ -17,7 +16,7 @@ class HexData:
         @param value (int, str or numpy array, optional): the value to pass to HexData
         @param padding (int, optional): the number of bytes to keep (could be higher or smaller than the real number
            of bytes)
-        '''
+        """
         self._data = np.array([])
         if not(value is None):
             if isinstance(value, np.ndarray):
@@ -53,81 +52,81 @@ class HexData:
 
     @property
     def value(self):
-        '''
+        """
         This property methods returns the value of the numpy array
 
         @return: numpy array
-        '''
+        """
         return self._data
 
     @property
-    def list(self):
-        '''
+    def list(self) -> list:
+        """
         This property methods returns the list value
 
         @return: list
-        '''
+        """
         return self._data.tolist()
 
     @property
     def string(self):
-        '''
+        """
         This property methods returns the string value without spaces
 
         @return: str hexadecimal
-        '''
+        """
         if len(self) > 0:
             return "".join(["{:02x}".format(x) for x in self._data])
         return ""
 
     @property
     def string_spaced(self):
-        '''
+        """
         This property methods returns the string value with spaces
 
         @return: str hexadecimal
-        '''
+        """
         if len(self) > 0:
             return " ".join(["{:02x}".format(x) for x in self._data])
         return ""
 
     @property
     def bytes(self):
-        '''
+        """
         This property methods returns the bytes value
 
         @return: bytes
-        '''
+        """
         return self._data.tobytes()
 
     @property
     def bytearray(self):
-        '''
+        """
         This property methods returns the bytes value
 
         @return: bytes
-        '''
+        """
         return bytearray(self._data)
 
     @property
     def number(self):
-        '''
+        """
         This property methods returns the integer value (could be big integer)
 
         @return: int
-        '''
+        """
         if len(self) > 0:
             return int.from_bytes(self._data.tobytes(), "big", signed=False)
         return 0
 
     def padding(self, nr_bytes):
-        '''
+        """
         This function forces the left padding of the _data attribute internally. This does not affect the represented
         integer value.
 
-        @param nr_bytes (int): the number of bytes of the _data attribute
+        @param nr_bytes: the number of bytes of the _data attribute
         @return:
-        '''
+        """
         diff = nr_bytes - len(self)
         if diff > 0:
             self._data = np.concatenate((np.zeros(diff, dtype=np.uint8), self._data))
@@ -137,13 +136,13 @@ class HexData:
             pass
 
     def right_padding(self, nr_bytes):
-        '''
+        """
         This function forces the left padding of the _data attribute internally. This does affect the represented
         integer value.
 
-        @param nr_bytes (int): the number of bytes of the _data attribute
+        @param nr_bytes: the number of bytes of the _data attribute
         @return:
-        '''
+        """
         diff = nr_bytes - self._data.shape[0]
         if diff > 0:
             self._data = np.concatenate((self._data, np.zeros(diff, dtype=np.uint8)))
@@ -154,24 +153,24 @@ class HexData:
 
     @staticmethod
     def rand(nr_bytes):
-        '''
+        """
         This function generates a random bytes array composed by nr_bytes. Note that, the padding is automatically
         performed. The random can starts by 00
 
-        @param nr_bytes (int): number of bytes of the random to generate.
+        @param nr_bytes: number of bytes of the random to generate.
         @return: HexData object with random bytes
-        '''
+        """
         data = np.array(np.frombuffer(np.random.bytes(nr_bytes), dtype=np.uint8))
 
         return HexData(value=data)
 
     def __xor__(self, other):
-        '''
+        """
         Override method to xor One HexData object with another value (all HexData allowed types).
 
         @param other (al allowed type for HexData): HexData object to use for the xor
         @return: xor of two values
-        '''
+        """
         if not isinstance(other, HexData):
             try:
                 other = HexData(other)
@@ -191,23 +190,23 @@ class HexData:
         return HexData(np.bitwise_xor(self._data, other._data))
 
     def __str__(self):
-        '''
+        """
         Override method to returns string_spaced
 
         @return: string_spaced
-        '''
+        """
         return self.string_spaced
 
     def __len__(self):
-        '''
+        """
         Override method to returns the object length in bytes
 
         @return: length in bytes
-        '''
+        """
         return self._data.shape[0]
 
     def __getitem__(self, index):
-        '''
+        """
         Override method for getitem.
 
         E.g:
@@ -217,7 +216,7 @@ class HexData:
 
         @param index: index(es) to get. It could be list, np.ndarray, slice and int)
         @return: HexData[index]
-        '''
+        """
         # Check type index
         if isinstance(index, list):
             pass
@@ -233,7 +232,7 @@ class HexData:
         return HexData(self._data[index])
 
     def __setitem__(self, index, value):
-        '''
+        """
         Override method for getitem.
 
         E.g:
@@ -245,7 +244,7 @@ class HexData:
         @param index: index(es) to get. It could be list, np.ndarray, slice and int)
         @param value: value(es) to set. It could be all HexData allowed types.
         @return:
-        '''
+        """
         # Check type index
         if isinstance(index, list):
             pass
@@ -280,12 +279,12 @@ class HexData:
         self._data[index] = value.value
 
     def __eq__(self, other):
-        '''
+        """
         Override method to for equals condition test. Check that self and other are equals in value and length.
 
         @param other: Value to compare. It could be all HexData allowed types.
         @return: conditional test comparison
-        '''
+        """
         if not isinstance(other, HexData):
             try:
                 other = HexData(other)
@@ -295,28 +294,29 @@ class HexData:
         # Perform comparison
         if len(self) != len(other):
             return False
-        return np.alltrue(np.equal(self.value, other.value))
+        return np.all(np.equal(self.value, other.value))
 
     def __add__(self, other):
-        '''
+        """
         Override method for adding two HexData object. This corresponds to the concatenation of the two objects.
 
         @param other: HexData object to add
         @return: Concatenation of the two objects
-        '''
+        """
+
         if not isinstance(other, HexData):
             raise ValueError("The second parameter is not a HexData object")
         return HexData(np.concatenate((self.value, other.value)))
 
     def __mul__(self, other):
-        '''
+        """
         Override method to reproduce the HexData object as many times as other value. This will corresponds to the
         concatenation of itself as many times as the other value.
 
         @param other: integer to reproduce the HexData object
         @return: Reproduction of the HexData value. This will corresponds to the concatenation of itself as many times
         as the other value
-        '''
+        """
         if not isinstance(other, int):
             raise ValueError("The second parameter is not an integer")
         return HexData(np.tile(self.value, other))

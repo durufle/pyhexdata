@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.abspath('../../pyhexdata'))
 # -- Project information -----------------------------------------------------
 
 project = 'HexData'
-copyright = '2020, UL-IMS'
-author = 'Stephane Potti'
+copyright = '2024, Laurent Bonnet'
+author = 'Laurent Bonnet'
 
 # The full version, including alpha/beta/rc tags
 version = '1.1.0'
@@ -64,7 +64,7 @@ html_theme_options = {
 }
 
 # UL Logo
-html_logo = './_images/UL_Solutions.png'
+html_logo = './_images/ragnarok.png'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -76,7 +76,7 @@ html_logo = './_images/UL_Solutions.png'
 today_fmt = "Generated on %b %d, %Y"
 
 latex_engine = 'xelatex'
-latex_logo = './_images/UL_Solutions.png'
+latex_logo = './_images/ragnarok.png'
 
 latex_elements = {
     'fontenc': '\\usepackage{fontspec}',

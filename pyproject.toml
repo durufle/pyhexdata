@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+version= "1.1.0"
+name = "ragnarok-pyhexdata"
+authors = [
+    {name = "Laurent Bonnet", email = "laurent.woolcap@free.fr"}
+]
+description = ""
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+]
+
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Home = "https://github.com/durufle/pyhexdata"
+BugTracker = "https://github.com/durufle/pyhexdata/issues"
+SourceCode = "https://github.com/durufle/pyhexdata"
+
+[tool.setuptools.packages.find]
+exclude = ['tests*', 'venv*', 'docs*']
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.pylint.master]
+ignore="conf.py"
+
+[tool.pylint.format]
+max-line-length = 120
+disable = "R0902, R0904, W0612, W0622"
+
+[tool.pytest.ini_options]
+# Only package and test are part of the coverage
+addopts = "--cov=./tests --cov=./pyhexdata"
+testpaths = ['tests']
