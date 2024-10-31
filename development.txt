@@ -1,0 +1,7 @@
+Sphinx
+coverage
+bump2version
+scipy
+pytest
+pytest-cov
+build

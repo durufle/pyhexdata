@@ -1,5 +1,5 @@
 **unreleased**
-xx
+
 **v1.1.0**
 - Add bytearray support
 
